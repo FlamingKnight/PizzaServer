@@ -1,7 +1,7 @@
 package io.github.willqi.pizzaserver.server.network.protocol.versions.v419.handlers;
 
 import com.nukkitx.network.VarInts;
-import io.github.willqi.pizzaserver.server.item.Item;
+import io.github.willqi.pizzaserver.server.item.ItemStack;
 import io.github.willqi.pizzaserver.server.network.protocol.packets.CreativeContentPacket;
 import io.github.willqi.pizzaserver.server.network.protocol.versions.PacketHelper;
 import io.github.willqi.pizzaserver.server.network.protocol.versions.ProtocolPacketHandler;
@@ -12,9 +12,9 @@ public class V419CreativeContentPacketHandler extends ProtocolPacketHandler<Crea
     @Override
     public void encode(CreativeContentPacket packet, ByteBuf buffer, PacketHelper helper) {
         VarInts.writeUnsignedInt(buffer, packet.getItems().length);
-        for (Item item : packet.getItems()) {
-            VarInts.writeUnsignedInt(buffer, item.getId().ordinal());
-            helper.writeItem(item, buffer);
+        for (ItemStack itemStack : packet.getItems()) {
+            VarInts.writeUnsignedInt(buffer, itemStack.getItem().ordinal());
+            helper.writeItem(itemStack, buffer);
         }
     }
 

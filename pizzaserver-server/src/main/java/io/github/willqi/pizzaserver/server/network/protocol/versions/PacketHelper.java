@@ -4,7 +4,7 @@ import com.nukkitx.network.VarInts;
 import io.github.willqi.pizzaserver.nbt.streams.nbt.NBTOutputStream;
 import io.github.willqi.pizzaserver.nbt.streams.varint.VarIntDataOutputStream;
 import io.github.willqi.pizzaserver.nbt.tags.NBTCompound;
-import io.github.willqi.pizzaserver.server.item.Item;
+import io.github.willqi.pizzaserver.server.item.ItemStack;
 import io.netty.buffer.ByteBuf;
 
 import java.io.ByteArrayOutputStream;
@@ -54,6 +54,6 @@ public abstract class PacketHelper {
         }
     }
 
-    public abstract void writeItem(Item item, ByteBuf buffer);
+    public abstract void writeItem(ItemStack itemStack, ByteBuf buffer);
 
 }

@@ -1,49 +1,42 @@
 package io.github.willqi.pizzaserver.server.item;
 
-import io.github.willqi.pizzaserver.nbt.tags.NBTCompound;
+import io.github.willqi.pizzaserver.server.item.modifiers.DurableItemModifier;
+import io.github.willqi.pizzaserver.server.item.modifiers.ItemModifier;
 
-public abstract class Item {
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-    private int damage;
-    private int count;
+public enum Item {
 
-    private NBTCompound tag;
+    WOODEN_SWORD("minecraft:wooden_sword", new DurableItemModifier(60));
 
-    private ItemID[] canBreak = new ItemID[0];
+    private final static Map<String, Item> nameIdLookup = new HashMap<>();
 
-
-    public abstract ItemID getId();
-
-    public int getDamage() {
-        return this.damage;
+    static {
+        Arrays.stream(Item.values())
+                .forEach(item -> nameIdLookup.put(item.getId(), item));
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    private final String nameId;
+    private final ItemModifier[] itemModifiers;
+
+
+    Item(String nameId, ItemModifier... itemModifiers) {
+        this.nameId = nameId;
+        this.itemModifiers = itemModifiers;
     }
 
-    public int getCount() {
-        return this.count;
+    public String getId() {
+        return this.nameId;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public ItemModifier[] getItemModifiers() {
+        return this.itemModifiers;
     }
 
-    public NBTCompound getTag() {
-        return this.tag;
-    }
-
-    public void setTag(NBTCompound tag) {
-        this.tag = tag;
-    }
-
-    public ItemID[] getBlocksCanBreak() {
-        return this.canBreak;
-    }
-
-    public void setBlocksCanBreak(ItemID[] blocks) {
-        this.canBreak = blocks;
+    public static Item getItemById(String id) {
+        return nameIdLookup.getOrDefault(id, null);
     }
 
 }
